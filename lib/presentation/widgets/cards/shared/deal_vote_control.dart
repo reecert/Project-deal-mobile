@@ -136,8 +136,6 @@ class _DealVoteControlState extends ConsumerState<DealVoteControl>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final neutralColor = theme.colorScheme.onSurface.withValues(alpha: 0.5);
     final textStyle = TextStyle(fontSize: widget.fontSize);
 
     return Row(
@@ -146,9 +144,9 @@ class _DealVoteControlState extends ConsumerState<DealVoteControl>
         GestureDetector(
           onTap: () => _handleVote(1),
           child: Icon(
-            _userVote == 1 ? Icons.thumb_up : Icons.thumb_up_outlined,
+            Icons.thumb_up,
             size: widget.iconSize,
-            color: _userVote == 1 ? kUpvoteColor : neutralColor,
+            color: _userVote == 1 ? kUpvoteColor : Colors.grey,
           ),
         ),
         const SizedBox(width: 4),
@@ -156,18 +154,16 @@ class _DealVoteControlState extends ConsumerState<DealVoteControl>
           '$_localUpvotes',
           style: textStyle.copyWith(
             fontWeight: _userVote == 1 ? FontWeight.w600 : FontWeight.normal,
-            color: _userVote == 1
-                ? kUpvoteColor
-                : theme.colorScheme.onSurface.withValues(alpha: 0.6),
+            color: _userVote == 1 ? kUpvoteColor : Colors.grey,
           ),
         ),
         const SizedBox(width: 12),
         GestureDetector(
           onTap: () => _handleVote(-1),
           child: Icon(
-            _userVote == -1 ? Icons.thumb_down : Icons.thumb_down_outlined,
+            Icons.thumb_down,
             size: widget.iconSize,
-            color: _userVote == -1 ? kDownvoteColor : neutralColor,
+            color: _userVote == -1 ? kDownvoteColor : Colors.grey,
           ),
         ),
         const SizedBox(width: 4),
@@ -175,9 +171,7 @@ class _DealVoteControlState extends ConsumerState<DealVoteControl>
           '$_localDownvotes',
           style: textStyle.copyWith(
             fontWeight: _userVote == -1 ? FontWeight.w600 : FontWeight.normal,
-            color: _userVote == -1
-                ? kDownvoteColor
-                : theme.colorScheme.onSurface.withValues(alpha: 0.6),
+            color: _userVote == -1 ? kDownvoteColor : Colors.grey,
           ),
         ),
       ],

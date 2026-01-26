@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/services/scraper_service.dart';
 
 class PostDealScreen extends ConsumerStatefulWidget {
   const PostDealScreen({super.key});
@@ -37,7 +38,7 @@ class _PostDealScreenState extends ConsumerState<PostDealScreen> {
   ];
 
   // User's color palette
-  static const Color _primary = Color(0xFF1D4ED8);
+  static const Color _primary = Color(0xFF2563EB);
 
   @override
   void dispose() {
@@ -52,22 +53,61 @@ class _PostDealScreenState extends ConsumerState<PostDealScreen> {
   }
 
   Future<void> _fetchDealFromUrl() async {
-    if (_urlController.text.isEmpty) return;
+    final url = _urlController.text.trim();
+    if (url.isEmpty) return;
 
     setState(() => _isFetching = true);
 
     try {
-      // TODO: Call scraper API to auto-fetch deal details
-      // For now, simulate with a delay
-      await Future.delayed(const Duration(seconds: 1));
+      final scraper = ScraperService();
+      final data = await scraper.scrapeUrl(url);
 
-      // Placeholder - in real implementation, this would populate from scraper
-      setState(() {
-        _dealUrlController.text = _urlController.text;
-        // Other fields would be auto-filled from scraper response
-      });
+      if (data != null) {
+        setState(() {
+          _dealUrlController.text = url;
+          if (data.title != null) _titleController.text = data.title!;
+          if (data.description != null) {
+            _descriptionController.text = data.description!;
+          }
+          if (data.price != null) {
+            _priceController.text = data.price!.toString();
+          }
+          if (data.storeName != null) {
+            _storeController.text = data.storeName!;
+            // Naive category guessing based on store
+            if (data.storeName!.toLowerCase().contains('amazon')) {
+              _selectedCategory = 'Electronics'; // Default guess
+            }
+          }
+
+          // Show mock image upload if image URL found
+          if (data.imageUrl != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Image found! (Mock upload)')),
+            );
+          }
+        });
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('No deal data found. Check the URL.')),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString().replaceAll('Exception: ', '')),
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     } finally {
-      setState(() => _isFetching = false);
+      if (mounted) {
+        setState(() => _isFetching = false);
+      }
     }
   }
 
@@ -113,7 +153,7 @@ class _PostDealScreenState extends ConsumerState<PostDealScreen> {
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -508,7 +548,7 @@ class _PostDealScreenState extends ConsumerState<PostDealScreen> {
   }) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

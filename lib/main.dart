@@ -10,7 +10,7 @@ class AppColors {
   // Primary colors
   static const Color white = Colors.white;
   static const Color headerFooter = Color(0xFF161617); // Dark charcoal
-  static const Color primary = Color(0xFF1D4ED8); // Blue
+  static const Color primary = Color(0xFF2563EB); // Blue
 
   // Light Mode
   static const Color lightBackground = Color(0xFFF8F9FA);

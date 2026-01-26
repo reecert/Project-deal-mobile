@@ -258,13 +258,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     : _isGridView
                     ? GridView.builder(
                         controller: _scrollController,
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(4),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              mainAxisSpacing: 4,
-                              crossAxisSpacing: 4,
-                              childAspectRatio: 0.58,
+                              mainAxisSpacing: 0,
+                              crossAxisSpacing: 0,
+                              childAspectRatio: 0.65,
                             ),
                         itemCount: _deals.length + (_isLoadingMore ? 2 : 0),
                         itemBuilder: (context, index) {

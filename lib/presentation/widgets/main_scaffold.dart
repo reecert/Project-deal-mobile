@@ -9,7 +9,7 @@ class MainScaffold extends StatelessWidget {
 
   // User's color palette
   static const Color _headerFooter = Color(0xFF161617);
-  static const Color _primary = Color(0xFF1D4ED8);
+  static const Color _primary = Color(0xFF2563EB);
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,7 @@ class _AnimatedPostButtonState extends State<_AnimatedPostButton>
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: const Color(0xFF1D4ED8),
+          color: const Color(0xFF2563EB),
           borderRadius: BorderRadius.circular(12),
         ),
         child: const Icon(Icons.add, color: Colors.white, size: 24),

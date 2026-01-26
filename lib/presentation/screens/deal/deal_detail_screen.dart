@@ -422,7 +422,7 @@ class _DealDetailScreenState extends ConsumerState<DealDetailScreen> {
                                 textStyle: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
-                                  color: Colors.blue[600],
+                                  color: const Color(0xFF2563EB),
                                 ),
                               ),
                               Text(
@@ -486,7 +486,7 @@ class _DealDetailScreenState extends ConsumerState<DealDetailScreen> {
                                         : Icons.thumb_up_outlined,
                                     size: 22,
                                     color: _userVote == 1
-                                        ? Colors.blue
+                                        ? const Color(0xFF2563EB)
                                         : (isDark
                                               ? Colors.grey[400]
                                               : Colors.grey[600]),
@@ -553,7 +553,7 @@ class _DealDetailScreenState extends ConsumerState<DealDetailScreen> {
                                   : Icons.bookmark_outline,
                               size: 22,
                               color: _isSaved
-                                  ? Colors.blue
+                                  ? const Color(0xFF2563EB)
                                   : (isDark
                                         ? Colors.grey[400]
                                         : Colors.grey[600]),
@@ -737,7 +737,7 @@ class _DealDetailScreenState extends ConsumerState<DealDetailScreen> {
                     child: Container(
                       height: 48,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF007AFF),
+                        color: const Color(0xFF2563EB),
                         borderRadius: BorderRadius.circular(24),
                       ),
                       child: Center(

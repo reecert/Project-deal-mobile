@@ -14,8 +14,8 @@ class AlertsScreen extends ConsumerStatefulWidget {
 class _AlertsScreenState extends ConsumerState<AlertsScreen> {
   List<Map<String, dynamic>> _notifications = [];
   bool _isLoading = true;
-  
-  static const Color _primary = Color(0xFF1D4ED8);
+
+  static const Color _primary = Color(0xFF2563EB);
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
 
     try {
       final supabase = Supabase.instance.client;
-      
+
       // Load notifications (votes, comments on user's deals, replies, etc.)
       final data = await supabase
           .from('notifications')
@@ -67,7 +67,7 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
           .from('notifications')
           .update({'is_read': true})
           .eq('user_id', user.id);
-      
+
       await _loadNotifications();
     } catch (e) {
       // Ignore if table doesn't exist
@@ -87,28 +87,31 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
           if (_notifications.isNotEmpty)
             TextButton(
               onPressed: _markAllAsRead,
-              child: Text('Mark all read', style: TextStyle(color: _primary, fontSize: 12)),
+              child: Text(
+                'Mark all read',
+                style: TextStyle(color: _primary, fontSize: 12),
+              ),
             ),
         ],
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : _notifications.isEmpty
-              ? _buildEmptyState(theme)
-              : RefreshIndicator(
-                  onRefresh: _loadNotifications,
-                  child: ListView.separated(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: _notifications.length,
-                    separatorBuilder: (context, index) => Divider(
-                      color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
-                    ),
-                    itemBuilder: (context, index) {
-                      final notification = _notifications[index];
-                      return _buildNotificationItem(notification, theme, isDark);
-                    },
-                  ),
+          ? _buildEmptyState(theme)
+          : RefreshIndicator(
+              onRefresh: _loadNotifications,
+              child: ListView.separated(
+                padding: const EdgeInsets.all(16),
+                itemCount: _notifications.length,
+                separatorBuilder: (context, index) => Divider(
+                  color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
                 ),
+                itemBuilder: (context, index) {
+                  final notification = _notifications[index];
+                  return _buildNotificationItem(notification, theme, isDark);
+                },
+              ),
+            ),
     );
   }
 
@@ -152,15 +155,19 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
     );
   }
 
-  Widget _buildNotificationItem(Map<String, dynamic> notification, ThemeData theme, bool isDark) {
+  Widget _buildNotificationItem(
+    Map<String, dynamic> notification,
+    ThemeData theme,
+    bool isDark,
+  ) {
     final type = notification['type'] ?? 'general';
     final message = notification['message'] ?? '';
     final isRead = notification['is_read'] ?? false;
     final createdAt = DateTime.tryParse(notification['created_at'] ?? '');
-    
+
     IconData icon;
     Color iconColor;
-    
+
     switch (type) {
       case 'upvote':
         icon = Icons.thumb_up;
@@ -242,7 +249,7 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
               width: 8,
               height: 8,
               decoration: const BoxDecoration(
-                color: Color(0xFF1D4ED8),
+                color: Color(0xFF2563EB),
                 shape: BoxShape.circle,
               ),
             ),
@@ -254,13 +261,26 @@ class _AlertsScreenState extends ConsumerState<AlertsScreen> {
   String _formatTime(DateTime date) {
     final now = DateTime.now();
     final diff = now.difference(date);
-    
+
     if (diff.inMinutes < 1) return 'Just now';
     if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
     if (diff.inHours < 24) return '${diff.inHours}h ago';
     if (diff.inDays < 7) return '${diff.inDays}d ago';
-    
-    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    final months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return '${months[date.month - 1]} ${date.day}';
   }
 }

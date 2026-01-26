@@ -222,13 +222,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             Expanded(
               child: _isLoading
                   ? GridView.builder(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(4),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            mainAxisSpacing: 4,
-                            crossAxisSpacing: 4,
-                            childAspectRatio: 0.58,
+                            mainAxisSpacing: 1,
+                            crossAxisSpacing: 1,
+                            childAspectRatio: 0.6,
                           ),
                       itemCount: 6,
                       itemBuilder: (context, index) => const DealCardSkeleton(),

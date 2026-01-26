@@ -47,7 +47,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     'New Threads',
   ];
 
-  static const Color _primary = Color(0xFF1D4ED8);
+  static const Color _primary = Color(0xFF2563EB);
   static const Color _storeGreen = Color(0xFF16A34A);
 
   @override
@@ -328,7 +328,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     return RefreshIndicator(
       onRefresh: _loadProfile,
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -337,7 +337,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             // ─────────────────────────────────────────────────────────
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(14),
                 child: Column(
                   children: [
                     // Avatar + Name row
@@ -758,7 +758,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                   colors: type == 'reputation'
                       ? [Colors.amber.shade400, Colors.orange.shade500]
                       : voteValue > 0
-                      ? [Colors.blue.shade400, Colors.blue.shade600]
+                      ? [const Color(0xFF60A5FA), const Color(0xFF2563EB)]
                       : [Colors.grey.shade400, Colors.grey.shade600],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -904,12 +904,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       );
     }
     return GridView.builder(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(4),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: 0.58,
+        mainAxisSpacing: 1,
+        crossAxisSpacing: 1,
+        childAspectRatio: 0.6,
       ),
       itemCount: _myDeals.length,
       itemBuilder: (context, index) => DealGridCard(deal: _myDeals[index]),
@@ -947,12 +947,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
       );
     }
     return GridView.builder(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(6),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: 0.58,
+        mainAxisSpacing: 3,
+        crossAxisSpacing: 3,
+        childAspectRatio: 0.6,
       ),
       itemCount: _savedDeals.length,
       itemBuilder: (context, index) => DealGridCard(deal: _savedDeals[index]),
